@@ -16,4 +16,30 @@ class ApplicationController < Sinatra::Base
     })
   end
 
+  delete '/games/:id' do
+    game = Game.find(params[:id])
+    game.destroy
+    game.to_json
+  end
+
+  post '/reviews' do
+    reviews  = Review.create(
+    score: params[:score],
+    comment: params[:comment],
+    game_id: params[:game_id],
+    user_id: params[:user_id]
+    )
+    reviews.to_json
+
+  end
+
+  patch '/reviews/:id' do
+    review = Review.find(params[:id])
+    review.update(
+      score: params[:score],
+      comment: params[:comment]
+    )
+    review.to_json
+  end
+
 end
